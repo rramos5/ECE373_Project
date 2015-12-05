@@ -15,7 +15,7 @@ public class Casino {
 		setPlayer(new Player("Player1"));
 		setClassic(new Classic());
 		setBlkjck(new BlackJack());
-		setSlot(new AmazingSevens());
+		slot = new AmazingSevens();
 	}
 
 	public Player getPlayer() {
@@ -40,14 +40,6 @@ public class Casino {
 
 	public void setBlkjck(BlackJack blkjck) {
 		this.blkjck = blkjck;
-	}
-
-	public AmazingSevens getSlot() {
-		return slot;
-	}
-
-	public void setSlot(AmazingSevens slot) {
-		this.slot = slot;
 	}
 	
 }

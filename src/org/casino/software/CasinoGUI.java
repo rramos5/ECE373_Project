@@ -16,7 +16,8 @@ public class CasinoGUI extends JFrame {
 	public CasinoGUI(String windowTitle, Casino aCasino){
 		super(windowTitle);
 		casino = aCasino;
-		setSize(1000,1000);
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		setSize(screenSize.width,screenSize.height);
 		//setLayout(new GridLayout());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		buildGUI();
@@ -25,9 +26,9 @@ public class CasinoGUI extends JFrame {
 	
 	public void buildGUI(){
 		menuPane = new JPanel();
-		pokerButton = new JButton("Video Poker");
-		blckjckButton = new JButton("Black Jack");
-		slotButton = new JButton("Amazing Sevens");
+		pokerButton = new JButton();
+		blckjckButton = new JButton();
+		slotButton = new JButton();
 		
 		menuPane.setLayout(new GridLayout());
 		menuPane.setBackground(Color.BLUE);
@@ -36,6 +37,10 @@ public class CasinoGUI extends JFrame {
 		blckjckButton.addActionListener(new MenuListener());
 		slotButton.addActionListener(new MenuListener());
 		
+		pokerButton.setIcon(new ImageIcon("Images/video_poker.png"));
+		blckjckButton.setIcon(new ImageIcon("Images/blackjackpng.png"));
+		slotButton.setIcon(new ImageIcon("Images/amazing7s.png"));
+
 		menuPane.add(pokerButton);
 		menuPane.add(blckjckButton);
 		menuPane.add(slotButton);
