@@ -7,7 +7,9 @@ import java.awt.event.*;
 
 public class CasinoGUI extends JFrame {
 	private Casino casino;
-	JPanel	menuPane;
+	JPanel	panels;
+	JPanel	menuPanel;
+	ClassicPanel classicPanel;
 	JButton pokerButton;
 	JButton blckjckButton;
 	JButton slotButton;
@@ -18,20 +20,20 @@ public class CasinoGUI extends JFrame {
 		casino = aCasino;
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setSize(screenSize.width,screenSize.height);
-		//setLayout(new GridLayout());
+		setLayout(new GridLayout());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		buildGUI();
 		setVisible(true);
 	}
 	
 	public void buildGUI(){
-		menuPane = new JPanel();
+		menuPanel = new JPanel();
 		pokerButton = new JButton();
 		blckjckButton = new JButton();
 		slotButton = new JButton();
 		
-		menuPane.setLayout(new GridLayout());
-		menuPane.setBackground(Color.BLUE);
+		menuPanel.setLayout(new GridLayout());
+		menuPanel.setBackground(Color.BLUE);
 		
 		pokerButton.addActionListener(new MenuListener());
 		blckjckButton.addActionListener(new MenuListener());
@@ -41,41 +43,38 @@ public class CasinoGUI extends JFrame {
 		blckjckButton.setIcon(new ImageIcon("Images/blackjackpng.png"));
 		slotButton.setIcon(new ImageIcon("Images/amazing7s.png"));
 
-		menuPane.add(pokerButton);
-		menuPane.add(blckjckButton);
-		menuPane.add(slotButton);
+		menuPanel.add(pokerButton);
+		menuPanel.add(blckjckButton);
+		menuPanel.add(slotButton);
+		menuPanel.setVisible(true);
 		
-		menuPane.setVisible(true);
+		classicPanel = new ClassicPanel(casino.getPlayer(),casino.getClassic());
+		// Add blackjack panel and slots panel
 		
-		add(menuPane);
+		panels = new JPanel(new CardLayout());
+		
+		panels.add(menuPanel,"MENUPANEL");
+		panels.add(classicPanel,"CLASSICPANEL");
+		
+		CardLayout cl = (CardLayout)(panels.getLayout());
+		cl.show(panels,"MENUPANEL");
+		
+		add(panels);
 	}
 	
 	private class MenuListener implements ActionListener{
 
 		public void actionPerformed(ActionEvent e) {
 			JButton source = (JButton)(e.getSource());
-			
+			CardLayout cl = (CardLayout)(panels.getLayout());
 			if(source.equals(pokerButton)){
-				handlePokerButton();
+				cl.show(panels,"CLASSICPANEL");
 			} else if(source.equals(blckjckButton)){
-				handleBlckJckButton();
+
 			}else if(source.equals(slotButton)){
-				handleSlotButton();
+
 			}
 		}
-		
-		private void handlePokerButton(){
-			
-		}
-		
-		private void handleBlckJckButton(){
-			
-		}
-		
-		private void handleSlotButton(){
-			
-		}
-		
 	}
 	
 	public static void main(String[] args){
