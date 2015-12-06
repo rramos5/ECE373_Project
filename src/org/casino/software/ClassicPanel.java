@@ -9,13 +9,15 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class ClassicPanel extends JPanel {
+	JPanel panels;
 	private Player player;
 	private Classic game;
-	private JButton card1,card2,card3,card4,card5,deal,draw;
+	private JButton card1,card2,card3,card4,card5,deal,draw,back;
 	
-	public ClassicPanel(Player aPlayer, Classic aGame){
+	public ClassicPanel(Player aPlayer, Classic aGame, JPanel aPanels){
 		player = aPlayer;
 		game = aGame;
+		panels = aPanels;
 		
 		setLayout(new GridBagLayout());
 		setBackground(Color.BLUE);
@@ -34,13 +36,24 @@ public class ClassicPanel extends JPanel {
 		add(deal);
 		draw = new JButton("Draw");
 		add(draw);
+		back = new JButton("Back");
+		back.addActionListener(new ButtonListener());
+		add(back);
 		
 		draw.setVisible(false);
 		setVisible(true);
 	}
 	
-	public void showClassicPanel(){
-		setVisible(true);
+	private class ButtonListener implements ActionListener {
+
+		public void actionPerformed(ActionEvent e) {
+			JButton source = (JButton)(e.getSource());
+			if(source.equals(back)){
+				CardLayout cl = (CardLayout)(panels.getLayout());
+				cl.show(panels,"MENUPANEL");
+			}
+		}
+		
 	}
 	
 }

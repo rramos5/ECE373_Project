@@ -27,6 +27,7 @@ public class CasinoGUI extends JFrame {
 	}
 	
 	public void buildGUI(){
+		panels = new JPanel(new CardLayout());
 		menuPanel = new JPanel();
 		pokerButton = new JButton();
 		blckjckButton = new JButton();
@@ -48,10 +49,8 @@ public class CasinoGUI extends JFrame {
 		menuPanel.add(slotButton);
 		menuPanel.setVisible(true);
 		
-		classicPanel = new ClassicPanel(casino.getPlayer(),casino.getClassic());
+		classicPanel = new ClassicPanel(casino.getPlayer(),casino.getClassic(),panels);
 		// Add blackjack panel and slots panel
-		
-		panels = new JPanel(new CardLayout());
 		
 		panels.add(menuPanel,"MENUPANEL");
 		panels.add(classicPanel,"CLASSICPANEL");

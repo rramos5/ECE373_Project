@@ -54,4 +54,8 @@ public class Card {
 		return valueToString() + "of" + suitToString();
 	}
 	
+	public String imageString(){
+		return valueToString().toLowerCase() + "_of_" + suitToString().toLowerCase() + ".png";
+	}
+	
 }
