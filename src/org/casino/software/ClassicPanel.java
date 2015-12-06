@@ -210,7 +210,6 @@ public class ClassicPanel extends JPanel {
 	}
 	
 	private void updateRewards(Integer bet){
-		//straight, kind3, pair2, pair, sflush, kind4, full, flush, rflush;
 		straight.setText("Straight:\t" + bet*10);
 		kind3.setText("Three Of A Kind:\t" + bet*3);
 		pair2.setText("Two Pair:\t" + bet*2);
