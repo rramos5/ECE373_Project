@@ -14,8 +14,11 @@ public class Casino {
 	public Casino(){
 		setPlayer(new Player("Player1"));
 		setClassic(new Classic());
+		classic.setPlayer(player);
 		setBlkjck(new BlackJack());
+		blkjck.setPlayer(player);
 		slot = new AmazingSevens();
+		slot.setPlayer(player);
 	}
 
 	public Player getPlayer() {

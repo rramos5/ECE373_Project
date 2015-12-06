@@ -9,6 +9,7 @@ public class Classic extends Game{
 	
 	public Classic(){
 		setDeck(new Deck());
+		playerHand = new ArrayList<Card>();
 		setGameType("Video Poker");
 		setGameName("Classic");
 	}
@@ -35,33 +36,35 @@ public class Classic extends Game{
 		}
 	}
 	
-	public void replaceCards(ArrayList<Integer> handIndex){
-		for(Integer h: handIndex){
-			playerHand.set(h, deck.dealACard());
-		}
+	public Card replaceCard(Integer handIndex){
+		playerHand.set(handIndex, deck.dealACard());
+		return getPlayerHand().get(handIndex);
+	}
+	
+	public void resetGame(){
+		deck = new Deck();
+		playerHand = new ArrayList<Card>();
 	}
 	
 	public Integer checkMatches(){
-		ArrayList<Card> tempHand = new ArrayList<Card>();
-		Collections.copy(tempHand, playerHand);
-		tempHand.sort((c1, c2)-> Integer.compare(c1.getValue(),c2.getValue()));
+		playerHand.sort((c1, c2)-> Integer.compare(c1.getValue(),c2.getValue()));
 		for(int i = 0; i < 4; i++){
-			if(tempHand.get(i).getValue() == tempHand.get(i+1).getValue()){
+			if(playerHand.get(i).getValue() == playerHand.get(i+1).getValue()){
 				// Pair found. Check for 3 of a kind and four of a kind unless
 				// we are at the 4th card in the hand.
-				if(i < 2 && tempHand.get(i+2).getValue() == tempHand.get(i).getValue()
-						&& tempHand.get(i+3).getValue() == tempHand.get(i).getValue()){
+				if(i < 2 && playerHand.get(i+2).getValue() == playerHand.get(i).getValue()
+						&& playerHand.get(i+3).getValue() == playerHand.get(i).getValue()){
 					// Four of a kind found
 					return 4;
-				} else if (i < 3 && tempHand.get(i+2).getValue() == tempHand.get(i).getValue()){
+				} else if (i < 3 && playerHand.get(i+2).getValue() == playerHand.get(i).getValue()){
 					// Three of a kind found
 					return 3;
 				} else {
 					// Check for two pair here
-					if(i == 0 && (tempHand.get(2).getValue() == tempHand.get(3).getValue() || 
-							tempHand.get(3).getValue() == tempHand.get(4).getValue()))
+					if(i == 0 && (playerHand.get(2).getValue() == playerHand.get(3).getValue() || 
+							playerHand.get(3).getValue() == playerHand.get(4).getValue()))
 						return 2;
-					else if (i == 1 && tempHand.get(3).getValue() == tempHand.get(4).getValue())
+					else if (i == 1 && playerHand.get(3).getValue() == playerHand.get(4).getValue())
 						return 2;
 					else
 						// Only a single pair found.
@@ -75,16 +78,14 @@ public class Classic extends Game{
 	}
 	
 	public Boolean checkFullHouse(){
-		ArrayList<Card> tempHand = new ArrayList<Card>();
-		Collections.copy(tempHand, playerHand);
-		tempHand.sort((c1, c2)-> Integer.compare(c1.getValue(),c2.getValue()));
-		if(tempHand.get(0).getValue() == tempHand.get(1).getValue() 
-				&& tempHand.get(2).getValue() == tempHand.get(3).getValue()
-				&& tempHand.get(2).getValue() == tempHand.get(4).getValue())
+		playerHand.sort((c1, c2)-> Integer.compare(c1.getValue(),c2.getValue()));
+		if(playerHand.get(0).getValue() == playerHand.get(1).getValue() 
+				&& playerHand.get(2).getValue() == playerHand.get(3).getValue()
+				&& playerHand.get(2).getValue() == playerHand.get(4).getValue())
 			return true;
-		else if(tempHand.get(0).getValue() == tempHand.get(1).getValue() 
-				&& tempHand.get(0).getValue() == tempHand.get(2).getValue()
-				&& tempHand.get(3).getValue() == tempHand.get(4).getValue())
+		else if(playerHand.get(0).getValue() == playerHand.get(1).getValue() 
+				&& playerHand.get(0).getValue() == playerHand.get(2).getValue()
+				&& playerHand.get(3).getValue() == playerHand.get(4).getValue())
 			return true;
 		return false;
 	}
@@ -99,11 +100,9 @@ public class Classic extends Game{
 	}
 	
 	public int checkStraight(){
-		ArrayList<Card> tempHand = new ArrayList<Card>();
-		Collections.copy(tempHand, playerHand);
-		tempHand.sort((c1, c2)-> Integer.compare(c1.getValue(),c2.getValue()));
+		playerHand.sort((c1, c2)-> Integer.compare(c1.getValue(),c2.getValue()));
 		for(int i = 0; i < 4; i++){
-			if(tempHand.get(i).getValue() + 1 != tempHand.get(i+1).getValue())
+			if(playerHand.get(i).getValue() + 1 != playerHand.get(i+1).getValue())
 				// Cannot be a straight. Return 0
 				return 0;
 		}
@@ -111,7 +110,7 @@ public class Classic extends Game{
 		if(checkFlush()){
 			// If the first card in the list is a 10 then we have found a Royal Flush
 			// otherwise it is just a straight flush.
-			if(tempHand.get(0).getValue() == 10)
+			if(playerHand.get(0).getValue() == 10)
 				return 3;
 			else
 				return 2;
@@ -165,6 +164,7 @@ public class Classic extends Game{
 			setMoneyWon(bet*20);
 			return 5;
 		}
+		setMoneyWon(0.00);
 		return 0;
 	}
 }

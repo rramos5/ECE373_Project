@@ -55,7 +55,8 @@ public class Card {
 	}
 	
 	public String imageString(){
-		return valueToString().toLowerCase() + "_of_" + suitToString().toLowerCase() + ".png";
+		return "Images/cards/" + valueToString().toLowerCase() + 
+				"_of_" + suitToString().toLowerCase() + ".png";
 	}
 	
 }

@@ -68,7 +68,7 @@ public class CasinoGUI extends JFrame {
 			CardLayout cl = (CardLayout)(panels.getLayout());
 			if(source.equals(pokerButton)){
 				cl.show(panels,"CLASSICPANEL");
-			} else if(source.equals(blckjckButton)){
+			}else if(source.equals(blckjckButton)){
 
 			}else if(source.equals(slotButton)){
 
